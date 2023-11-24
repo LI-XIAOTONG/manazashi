@@ -1,9 +1,19 @@
 {
-  "name": "manazashi",
-  "version": "0.0.0",
-  "description": "manazashi",
-  "main": "app.js",
-  "author": {
-    "name": ""
-  }
+    "name": "manazashi",
+    "version": "0.0.0",
+    "description": "manazashi",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": {
+        "name": ""
+    },
+    "dependencies": {
+        "express": "^4.18.2"
+    },
+    "engines": {
+        "node": "16.15.1"
+    }
 }
