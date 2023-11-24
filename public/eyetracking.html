@@ -1,0 +1,99 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
+    <title>Eye Tracking Test</title>
+  </head>
+
+  <body>
+    <!-- すべてのレイヤーを.allグループで重ねる -->
+    <div id="all">
+
+      <video
+        src="asset/fire-4.mp4"
+        id="video4"
+      ></video>
+
+      <video
+        src="asset/fire-3.mp4"
+        id="video3"
+      ></video>
+
+      <video
+        src="asset/video1.mp4"
+        id="video2"
+      ></video>
+
+      <video
+        src="asset/video2.mov"
+        id="video1"
+      ></video>
+
+      <video src="asset/本作品の詳細.mp4" id="end"></video>video>
+      
+      <video src="asset/ま2.mp4" muted id="tv0"></video>
+      <video src="asset/な2.mp4" muted id="tv1"></video>
+      <video src="asset/ざ2.mp4" muted id="tv2"></video>
+      <video src="asset/し2.mp4" muted id="tv3"></video>
+      <video src="asset/を2.mp4" muted id="tv4"></video>
+      <video src="asset/ま2.mp4" muted id="tv5"></video>
+      <video src="asset/な2.mp4" muted id="tv6"></video>
+      <video src="asset/ざ2.mp4" muted id="tv7"></video>
+      <video src="asset/す2.mp4" muted id="tv8"></video>
+
+      <img src="asset/WHITE2.png" id="white"></img>
+      <video src="asset/ご着席ください.mp4" id="start"></video>video>
+
+      <!-- 視線推定の点 -->
+      <div id="gazer"></div>
+      <!-- ターゲット領域の長方形 -->
+      <div id="target">
+    </div>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+
+＃＃＃＃＃＃＃＃＃＃＃＃＃＃
+＃　　いじる必要がない　　＃
+＃　NEED NOT TO TOUCH ＃
+＃＃＃＃＃＃＃＃＃＃＃＃＃＃
+-->
+
+    <!-- <div id="control"> -->
+    <!-- <button class="hideonprogress" id="startrecording" onclick="start()">
+      record
+    </button> -->
+    <!-- <button id="stoprecording" onclick="stop()">stop</button> -->
+    <div class="spacer"></div>
+
+    <!-- </div> -->
+    <div id="calibrationbox">
+      <button onclick="closeCalibration()">Close</button>
+      <div class="calibrationpoint point1" onclick="calibrate(1)"></div>
+      <div class="calibrationpoint point2" onclick="calibrate(2)"></div>
+      <div class="calibrationpoint point3" onclick="calibrate(3)"></div>
+      <div class="calibrationpoint point4" onclick="calibrate(4)"></div>
+      <div class="calibrationpoint point5" onclick="calibrate(5)"></div>
+      <div class="calibrationpoint point6" onclick="calibrate(6)"></div>
+      <div class="calibrationpoint point7" onclick="calibrate(7)"></div>
+      <div class="calibrationpoint point8" onclick="calibrate(8)"></div>
+      <div class="calibrationpoint point9" onclick="calibrate(9)"></div>
+    </div>
+    <div id="showrecordingcount"></div>
+
+    <script src="webgazer.js" type="text/javascript"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

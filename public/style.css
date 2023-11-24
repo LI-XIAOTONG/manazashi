@@ -1,0 +1,213 @@
+/* .allグループ */
+.all {
+  position: relative;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  cursor: cell;
+}
+
+/* videoの属性 */
+#video1,
+#video2,
+#video3,
+#video4 {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+}
+video {
+  object-fit: fill;
+}
+
+/* title */
+#title {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  opacity: 1;
+}
+#last {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  opacity: 0;
+}
+.text {
+  position: absolute;
+  top: 35vh;
+  left: 22vw;
+  font-size: 9vh;
+  color: white;
+}
+p {
+  float: left;
+}
+
+#t0,
+#t1,
+#t2,
+#t3,
+#t4,
+#t5,
+#t6,
+#t7,
+#t8 {
+  position: absolute;
+  background: #0091ea;
+  opacity: 0;
+}
+
+#tv0,
+#tv1,
+#tv2,
+#tv3,
+#tv4,
+#tv5,
+#tv6,
+#tv7,
+#tv8 {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+#start,
+#white,
+#end {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* 左上の内カメラを消す */
+/* #webgazerVideoContainer {
+  display: none !important;
+} */
+
+/* 視線推定の点 */
+#gazer {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  border-radius: 20px;
+  background: red;
+  opacity: 0;
+}
+
+/*　target領域の長方形 */
+#target {
+  position: fixed;
+  background: #0091ea;
+  opacity: 0;
+}
+
+/* クロールバー非表示 */
+.all::-webkit-scrollbar {
+  display: none; /*Google Chrome、Safari、Microsoft Edge対応のスクロールバー非表示コード*/
+}
+
+/* 
+
+
+
+
+
+
+
+
+
+
+＃＃＃＃＃＃＃＃＃＃＃＃＃＃
+＃　　いじる必要がない　　＃
+＃　NEED NOT TO TOUCH ＃
+＃＃＃＃＃＃＃＃＃＃＃＃＃＃
+ */
+
+body {
+  margin: 0;
+}
+#webgazerVideoContainer {
+  opacity: 0.7;
+}
+.spacer {
+  width: 50px;
+}
+#control {
+  display: flex;
+  position: fixed;
+  z-index: 1;
+}
+#stoprecording {
+  display: none;
+}
+#showrecordingcount {
+  display: none;
+  position: fixed;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+  top: 0px;
+  left: 0px;
+  color: white;
+  font-size: 80px;
+}
+#calibrationbox {
+  display: none;
+  position: fixed;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0);
+  width: 100vw;
+  height: 100vh;
+  top: 0px;
+  left: 0px;
+  cursor: pointer;
+}
+.calibrationpoint {
+  width: 40px;
+  height: 40px;
+  background: yellow;
+  border-radius: 40px;
+  position: absolute;
+  opacity: 0.3;
+}
+/**
+      point1 point2 point3
+      point4 point5 point6
+      point7 point8 point9
+    */
+.point1,
+.point2,
+.point3 {
+  top: 40px;
+}
+.point1,
+.point4,
+.point7 {
+  left: 40px;
+}
+.point4,
+.point5,
+.point6 {
+  top: calc(50% - 60px);
+}
+.point2,
+.point5,
+.point8 {
+  left: calc(50% - 60px);
+}
+.point7,
+.point8,
+.point9 {
+  top: calc(100% - 80px);
+}
+.point3,
+.point6,
+.point9 {
+  left: calc(100% - 80px);
+}

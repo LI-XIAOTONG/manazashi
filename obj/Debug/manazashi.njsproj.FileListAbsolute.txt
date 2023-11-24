@@ -1,0 +1,3 @@
+C:\Users\cyber\Desktop\web develop\manazashi\manazashi\obj\Debug\manazashi.njsproj.AssemblyReference.cache
+C:\Users\cyber\Desktop\web develop\manazashi\manazashi\obj\Debug\manazashi.njsproj.CoreCompileInputs.cache
+C:\Users\cyber\Desktop\web develop\manazashi\manazashi\bin\Microsoft.NodejsTools.WebRole.dll
