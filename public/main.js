@@ -7,10 +7,27 @@ console.log(ww, wh);
 const gazeel = document.querySelector("#gazer");
 const targetel = document.querySelector("#target");
 const faceel = document.querySelector("#webgazerVideoContainer");
-var videoElem1 = document.getElementById("video1");
-var videoElem2 = document.getElementById("video2");
-var videoElem3 = document.getElementById("video3");
-var videoElem4 = document.getElementById("video4");
+//var videoElem1 = document.getElementById("video1");
+//var videoElem2 = document.getElementById("video2");
+//var videoElem3 = document.getElementById("video3");
+//var videoElem4 = document.getElementById("video4");
+
+var s1v1 = document.getElementById("s1v1");
+var s1v2 = document.getElementById("s1v2");
+var s2v1 = document.getElementById("s2v1");
+var s2v2 = document.getElementById("s2v2");
+var s2v3 = document.getElementById("s2v3");
+var s2v4 = document.getElementById("s2v4");
+var s3v1 = document.getElementById("s3v1"); //loop前
+var s3v2 = document.getElementById("s3v2"); //loop
+var s3v3 = document.getElementById("s3v3"); //失敗
+var s3v4 = document.getElementById("s3v4"); //成功
+
+
+
+
+
+
 var videoElemStart = document.getElementById("start");
 var imgElemWhite = document.getElementById("white");
 var videoElemEnd = document.getElementById("end");
@@ -52,7 +69,7 @@ const inRegionListNum = 100; // キューの要素数の上限
 
 // scene番号を管理
 var sceneNum = 7;
-var scene = 0;// 0->生姜  1,2->ろうそく　6->タイトル
+var scene = 0;// 0->生姜  1,2->ろうそく 3->ジェンガ導入 4->ジェンガループ 5->ジェンガループ　6->タイトル
 
 // 初期設定
 var xtarget;
@@ -223,7 +240,7 @@ webgazer
     //console.log((timeEnd - timeStart) / 1000);
     if (scene % sceneNum == 1) {
       if ((nowStatus == "MOVIE") & (timeEnd - timeStart > 10 * 1000)) {
-        gazeAtTarget(); //凝視フラグ強制発動！！1つ目のろうそくだけ30秒
+        gazeAtTarget(); //凝視フラグ強制発動！！1つ目のろうそくだけ10秒
       }
     } else if (scene % sceneNum == 6) {
       if ((nowStatus == "MOVIE") & (timeEnd - timeStart > 10 * 1000)) {
@@ -235,7 +252,7 @@ webgazer
         }
       }
     } else {
-      if ((nowStatus == "MOVIE") & (timeEnd - timeStart > 10 * 1000)) {
+      if ((nowStatus == "MOVIE") & (timeEnd - timeStart > 10 * 1000) & (scene % sceneNum != 4)) {
         gazeAtTarget(); //凝視フラグ強制発動！！
       }
     }
@@ -246,6 +263,7 @@ webgazer
       nowStatus = "MOVIE";
       scene = 0;
       changeMovie();
+
     }
 
     // 視線推定の点の位置座標を指定
@@ -324,25 +342,37 @@ function checkSomeoneHere(n, dt) {
 function gazeAtTarget() {
   if (scene % sceneNum == 0) {
     //生姜
-    videoElem1.style.opacity = 0;
-    videoElem1.muted = true;
-    videoElem2.muted = false;
-    videoElem2.play();
+    s1v1.style.opacity = 0;
+    s1v2.style.opacity = 1;
+    s1v1.muted = true;
+    s1v2.muted = false;
+    s1v2.play();
+    
+   
+
   } else if (scene % sceneNum == 1) {
     //ろうそく1
-    videoElem1.style.opacity = 0;
-    videoElem1.muted = true;
-    videoElem2.muted = false;
-    videoElem2.play();
+    s2v1.style.opacity = 0;
+    s2v2.style.opacity = 1;
+    s2v1.muted = true;
+    s2v2.muted = false;
+    s2v2.play();
+
+
+
   } else if (scene % sceneNum == 2) {
     //ろうそく2
-    videoElem3.style.opacity = 0;
-    videoElem3.muted = true;
-    videoElem4.muted = false;
-    videoElem4.play();
+    s2v3.style.opacity = 0;
+    s2v3.muted = true;
+    s2v4.style.opacity = 1;
+    s2v4.muted = false;
+    s2v4.play();
+
+
   } else if (scene % sceneNum == 4) {
     //ジェンガ崩れる
     loopCount = -100;
+    console.log("down because of gaze");
   }
 }
 
@@ -351,55 +381,86 @@ function changeMovie() {
   timeStart = new Date();
   muteAllVideos();
   if (scene % sceneNum == 0) {
-    //生姜
+    //生姜の始まり    
     clearAllVideos();
-    videoElem1.src = "asset/video2.mov";
-    videoElem2.src = "asset/video1.mp4";
-    videoElem1.style.opacity = 1;
-    videoElem2.style.opacity = 1;
-    videoElem1.muted = false;
-    videoElem1.play();
+ 
+    s1v1.style.opacity = 1;
+    s1v2.style.opacity = 0;
+    s1v1.muted = false;
+    s1v1.play();
+    //s1v2.load();
+    //s2v1.load();
+
+
   } else if (scene % sceneNum == 1) {
     //ろうそく1
     clearAllVideos();
-    videoElem1.src = "asset/fire-1.mp4";
-    videoElem2.src = "asset/fire-2.mp4";
-    videoElem3.src = "asset/fire-3.mp4";
-    videoElem4.src = "asset/fire-4.mp4";
-    videoElem1.style.opacity = 1;
-    videoElem2.style.opacity = 1;
-    videoElem3.style.opacity = 1;
-    videoElem4.style.opacity = 1;
-    videoElem1.muted = false;
-    videoElem1.play();
+
+    s2v1.style.opacity = 1;
+    //s2v2.style.opacity = 0;
+    //s2v3.style.opacity = 0;
+    //s2v4.style.opacity = 0;
+    s2v1.muted = false;
+    s2v1.play();
+    
+    //s2v2.load();
+    //s2v3.load();
+    //s2v4.load();
+
   } else if (scene % sceneNum == 2) {
     //ろうそく2
-    videoElem1.style.opacity = 0;
-    videoElem2.style.opacity = 0;
-    videoElem3.muted = false;
-    videoElem3.play();
+    //videoElem1.style.opacity = 0;
+    //videoElem2.style.opacity = 0;
+    //videoElem3.muted = false;
+    //videoElem3.play();
+    
+    s2v1.style.opacity = 0;
+    s2v2.style.opacity = 0;
+    s2v3.style.opacity = 1;
+    s2v3.muted = false;
+    s2v3.play();
+
+    //s3v1.load();
+
   } else if (scene % sceneNum == 3) {
     //ジェンガ導入
     clearAllVideos();
-    videoElem1.src = "asset/Loop前.mp4";
-    videoElem1.style.opacity = 1;
+    //videoElem1.src = "asset/Loop前.mp4";
+    //videoElem1.style.opacity = 1;
+
+    s3v1.style.opacity = 1;
+    
+    //s3v2.load();
+    //s3v3.load();
+    //s3v4.load();
+
     sleep(100);
-    videoElem2.src = "asset/Loop.mp4";
-    videoElem3.src = "asset/Loop後.mp4";
-    videoElem2.style.opacity = 1;
-    videoElem3.style.opacity = 1;
-    videoElem1.muted = false;
-    videoElem1.play();
+
+    
+    //s3v2.style.opacity = 1;
+    //s3v3.style.opacity = 1;
+    s3v1.muted = false;
+    s3v1.play();
+
+
   } else if (scene % sceneNum == 4) {
     //ジェンガループ
-    videoElem1.style.opacity = 0;
-    videoElem2.muted = false;
-    videoElem2.play();
+
+
+    s3v1.style.opacity = 0;
+    s3v2.style.opacity = 1;
+    s3v2.muted = false;
+    s3v2.play();
+
   } else if (scene % sceneNum == 5) {
     //ジェンガ崩れる
-    videoElem2.style.opacity = 0;
-    videoElem3.muted = false;
-    videoElem3.play();
+
+    
+    s3v2.style.opacity = 0;
+    s3v3.style.opacity = 1;
+    s3v3.muted = false;
+    s3v3.play();
+
   } else if (scene % sceneNum == 6) {
     //タイトル崩れる
     for (let i = 0; i < 9; i++) {
@@ -465,18 +526,46 @@ function setTarget() {
 
 // ビデオ全ミュート
 function muteAllVideos() {
-  videoElem1.muted = true;
-  videoElem2.muted = true;
-  videoElem3.muted = true;
-  videoElem4.muted = true;
+  s1v1.muted = true;
+  s1v2.muted = true;
+  s2v1.muted = true;
+  s2v2.muted = true;
+  s2v3.muted = true;
+  s2v4.muted = true;
+  s3v1.muted = true;
+  s3v2.muted = true;
+  s3v3.muted = true;
+  s3v4.muted = true;
+}
+
+function loadAllVideos()
+{
+  s1v1.load();
+  s1v2.load();
+  s2v1.load();
+  s2v2.load();
+  s2v3.load();
+  s2v4.load();
+  s3v1.load();
+  s3v2.load();
+  s3v3.load();
+  s3v4.load();
+
 }
 
 // ビデオ全透明
 function clearAllVideos() {
-  videoElem1.style.opacity = 0;
-  videoElem2.style.opacity = 0;
-  videoElem3.style.opacity = 0;
-  videoElem4.style.opacity = 0;
+  s1v1.style.opacity = 0;
+  s1v2.style.opacity = 0;
+  s2v1.style.opacity = 0;
+  s2v2.style.opacity = 0;
+  s2v3.style.opacity = 0;
+  s2v4.style.opacity = 0;
+  s3v1.style.opacity = 0;
+  s3v2.style.opacity = 0;
+  s3v3.style.opacity = 0;
+  s3v4.style.opacity = 0;
+
   videoElemEnd.style.opacity = 0;
   for (let i = 0; i < 9; i++) {
     tvel[i].style.opacity = 0;
@@ -493,48 +582,26 @@ function sleep(waitMsec) {
 }
 
 // 手前のビデオループをなめらかに
-videoElem1.addEventListener("timeupdate", function () {
+s1v1.addEventListener("timeupdate", function () {
+  //生姜ループ
   if (scene % sceneNum == 0) {
     if (this.currentTime >= 0.22) {
       this.currentTime = 0.0;
     }
-  } else if (scene % sceneNum == 1) {
+  } 
+});
+
+s2v1.addEventListener("timeupdate", function () {
+  //ろうそくループ1
+  if (scene % sceneNum == 1) {
     if (this.currentTime >= 9.5) {
       this.currentTime = 0.0;
     }
   }
 });
-videoElem2.addEventListener("timeupdate", function () {
-  if (scene % sceneNum == 4) {
-    if (this.currentTime >= 1.6) {
-      if (loopCount < 0) {
-        //ジェンガ崩れる
-        scene += 1;
-        videoElem2.style.opacity = 0;
-        videoElem3.muted = false;
-        videoElem3.play();
-        loopCount = 0;
-      } else if (0 <= loopCount < 5) {
-        this.currentTime = 0.0;
-        videoElem2.play();
-        loopCount += 1;
-        if (loopCount == 4) {
-          videoElem3.src = "asset/ジェンガ倒れず.mp4";
-        }
-      } else {
-        //ジェンガ崩れない
-        console.log(loopCount);
-        videoElem2.muted = true;
-        videoElem3.muted = false;
-        videoElem2.style.opacity = 0;
-        videoElem3.play();
-        scene += 1;
-        loopCount = 0;
-      }
-    }
-  }
-});
-videoElem3.addEventListener("timeupdate", function () {
+
+s2v3.addEventListener("timeupdate", function () {
+  //ろうそくループ2
   if (scene % sceneNum == 2) {
     if (this.currentTime >= 6.8) {
       this.currentTime = 0.0;
@@ -542,37 +609,111 @@ videoElem3.addEventListener("timeupdate", function () {
   }
 });
 
+s3v2.addEventListener("timeupdate", function () {
+  if (scene % sceneNum == 4) {
+    if (this.currentTime >= 1.55) {
+      
+      if (loopCount < 0) {
+        //視線によりジェンガ崩れる
+       
+
+        //videoElem2.style.opacity = 0;
+        //videoElem3.muted = false;
+        //videoElem3.play();
+
+        s3v2.style.opacity = 0;
+        s3v3.style.opacity = 1;
+        s3v3.muted = false;
+        s3v3.play();
+
+        scene += 1;
+        loopCount = 0;
+        
+      } else if (0 <= loopCount < 5) {
+        this.currentTime = 0.0;
+        s3v2.style.opacity = 1;
+        loopCount += 1;
+        console.log(loopCount + "<=5");
+      } else if(loopCount >= 5) {
+        //ジェンガ崩れない
+        console.log("not down "+loopCount);
+        //videoElem2.muted = true;
+        //videoElem3.muted = false;
+        //videoElem2.style.opacity = 0;
+        //videoElem3.play();
+        
+        s3v2.muted = true;
+        s3v4.muted = false;
+        s3v2.style.opacity = 0;
+        s3v3.style.opacity = 0;
+        s3v4.style.opacity = 1;
+        s3v4.play();
+
+        scene += 1;
+        loopCount = 0;
+      }
+    }
+  }
+
+});
+
+
+
+
+
 // ビデオの終了フラグ　シーンを切り替える
 videoElemStart.addEventListener("ended", function () {
   webgazer.removeMouseEventListeners();
   timeStart = new Date();
   this.style.opacity = 0;
   nowStatus = "CALIBRATION";
+
+  //s1v1.load(); //ここで生姜をロード
 });
-videoElem1.addEventListener("ended", function () {
+
+s3v1.addEventListener("ended", function () {
+  //ジェンガ導入終わり
   if (scene % sceneNum == 3) {
     scene += 1;
     changeMovie();
   }
 });
-videoElem2.addEventListener("ended", function () {
-  if (scene % sceneNum == 0 || scene % sceneNum == 1) {
+s1v2.addEventListener("ended", function () {
+  //生姜終わり
+  if (scene % sceneNum == 0) {
     scene += 1;
     changeMovie();
   }
 });
-videoElem3.addEventListener("ended", function () {
+s2v2.addEventListener("ended", function () {
+  //ろうそく1終わり
+  if (scene % sceneNum == 1) {
+    scene += 1;
+    changeMovie();
+  }
+});
+
+s3v3.addEventListener("ended", function () {
+  //ジェンガ成功終わり
   if (scene % sceneNum == 5) {
-    videoElem3.style.opacity = 0;
+    this.style.opacity = 0;
     scene += 1;
     changeMovie();
   }
 });
-videoElem4.addEventListener("ended", function () {
+
+s2v4.addEventListener("ended", function () {
+  //ろうそく2終わり
   if (scene % sceneNum == 2) {
     scene += 1;
     changeMovie();
-  } else if (scene % sceneNum == 5) {
+  }
+});
+
+s3v4.addEventListener("ended", function () {
+  //ジェンガ失敗終わり
+  if (scene % sceneNum == 5) {
+    this.style.opacity = 0;
     scene += 1;
     changeMovie();
   }
@@ -732,6 +873,7 @@ function calibration() {
     calibratePoints[i] = 0;
   });
   calib = 1;
+  loadAllVideos();
 }
 function closeCalibration() {
   webgazer.removeMouseEventListeners(); //キャリブレーションが終わったら学習を閉じる
@@ -746,6 +888,7 @@ function closeCalibration() {
   imgElemWhite.style.opacity = 0;
   scene = 0;
   changeMovie();
+ 
 }
 function clear() {
   webgazer.clearData(); // データをクリアする

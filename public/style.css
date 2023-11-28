@@ -8,10 +8,16 @@
 }
 
 /* videoの属性 */
-#video1,
-#video2,
-#video3,
-#video4 {
+#s1v1,
+#s1v2,
+#s2v1,
+#s2v2,
+#s2v3,
+#s2v4,
+#s3v1,
+#s3v2,
+#s3v3,
+#s3v4 {
   position: fixed;
   height: 100vh;
   width: 100vw;
