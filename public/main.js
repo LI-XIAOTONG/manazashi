@@ -37,7 +37,7 @@ for (let i = 0; i < 9; i++) {
   tvel[i].style.height = h + "px";
   tvinfo[i] = [x + ((i + 2) / 13) * ww, y, w, h];
 }
-var tvplay = new Array(9).fill(false);
+var tvplay = new Array(9).fill(false); //タイトルが落ちるシーンで使う
 var tvpause = new Array(9).fill(true);
 
 // 視線位置のqueueNum回の平均を計算するための準備
@@ -52,7 +52,7 @@ const inRegionListNum = 100; // キューの要素数の上限
 
 // scene番号を管理
 var sceneNum = 7;
-var scene = 0;
+var scene = 0;// 0->生姜  1,2->ろうそく　6->タイトル
 
 // 初期設定
 var xtarget;
@@ -64,8 +64,9 @@ var nobody = 0;
 var nowStatus = "START";
 var loopCount = 0;
 var timeStart = 0;
-var calib = 0;
-var noCalibration = true;
+var calib = 0;  //web キャリブレーションしている？　0していない
+var noCalibration = true; //キャリブレーションしているかどうか　true = していない　　　web:キャリブレーションしたかどうか　true = したことがない
+
 setTarget();
 muteAllVideos();
 
@@ -85,7 +86,7 @@ webgazer
       // 誰もいなかったら
       if (nobody < 10000) {
         nobody += 1;
-        console.log(nobody);
+        //console.log(nobody);
         checkSomeoneHere(10, dt);
       }
       return;
@@ -142,9 +143,24 @@ webgazer
     // calibration
     if (nowStatus == "CALIBRATION") {
       imgElemWhite.style.opacity = 1;
-      if (!noCalibration) {
-        timeStart = new Date();
+      if(noCalibration) //キャリブレーションしたことがない
+      {
+        imgElemWhite.src = "asset/WHITE3.png";
+        gazeel.style.opacity = 0.5;
+        if(calib == 0) //キャリブレーションしていない
+        {
+          calibration();  //強制キャリブレーション 
+        }
+        
       }
+      else{
+        imgElemWhite.src = "asset/WHITE2.png";
+      }
+      
+      //キーを押してキャリブレーションしている場合、5秒後にシーンを切り替えない
+      //if (!noCalibration) { 
+      //  timeStart = new Date();
+      //}
     }
 
     // scene6
@@ -204,7 +220,7 @@ webgazer
 
     // もし視線がtarget領域に入らずに一定時間経過したら（10秒に設定しています）
     const timeEnd = new Date();
-    console.log((timeEnd - timeStart) / 1000);
+    //console.log((timeEnd - timeStart) / 1000);
     if (scene % sceneNum == 1) {
       if ((nowStatus == "MOVIE") & (timeEnd - timeStart > 10 * 1000)) {
         gazeAtTarget(); //凝視フラグ強制発動！！1つ目のろうそくだけ30秒
@@ -223,7 +239,8 @@ webgazer
         gazeAtTarget(); //凝視フラグ強制発動！！
       }
     }
-    if ((nowStatus == "CALIBRATION") & (timeEnd - timeStart > 5 * 1000)) {
+    if ((nowStatus == "CALIBRATION") & (timeEnd - timeStart > 5 * 1000) & !noCalibration) {
+      //5秒後にキャリブレーションからmovieに移行 キャリブレーションした場合のみ
       imgElemWhite.style.opacity = 0;
       //MOVIEの初期化
       nowStatus = "MOVIE";
@@ -242,7 +259,7 @@ webgazer
       ); */
     /* console.log(inRegionList);ggg
     console.log(isAllTrue(inRegionList)); */
-    console.log(scene);
+    //console.log(scene);
     /* console.log(dt); */
     /* console.log(nobody); */
   })
@@ -525,7 +542,7 @@ videoElem3.addEventListener("timeupdate", function () {
   }
 });
 
-// ビデオの終了フラグ
+// ビデオの終了フラグ　シーンを切り替える
 videoElemStart.addEventListener("ended", function () {
   webgazer.removeMouseEventListeners();
   timeStart = new Date();
@@ -580,25 +597,24 @@ for (let i = 0; i < 9; i++) {
 for (let i = 0; i < 9; i++) {
   tvel[i].addEventListener("ended", function () {
     tvplay[i] = true;
-    zq;
     tvpause[i] = true;
   });
 }
 
 // キーボードを押した時の挙動管理
-// G : gaze ON/OFF
+// G : gaze ON/OFF          
 // T : target ON/OFF
 // F : face ON/OFF 　　　　　　機能していない！！
-// 1 : 動画を1つ進める
-// 2 : 動画を1つ戻す
-// 3 : 手前の動画 ON/OFFqqqqqqq1111a2111a11qqqqq22222qzzz
-// 4 : target領域を見る
-// Q : calibrationモードに移行
-// Z : calibration開始
-// A : 映像モードに移行qqq1111aq111222222
+// 1 : 動画を1つ進める          web無効
+// 2 : 動画を1つ戻す                  web無効
+// 3 : 手前の動画 ON/OFF             web無効
+// 4 : target領域を見る          web無効
+// Q : calibrationモードに移行　　　　web無効
+// Z : calibration開始                 web無効
+// A : 映像モードに移行             web無効
 // X : 学習データ初期化         怖いので今は無効にしてる！！
-// N : 学習ストップ
-// L : 学習開始
+// N : 学習ストップ          web無効
+// L : 学習開始            web無効
 document.addEventListener("keypress", keypress_ivent);
 
 function keypress_ivent(e) {
@@ -607,7 +623,7 @@ function keypress_ivent(e) {
   } else if (e.key === "t" || e.key === "T") {
     targetel.style.opacity = 0.5 - targetel.style.opacity;
   } else if (e.key === "f" || e.key === "F") {
-    faceel.style.opacity = 0.7 - faceel.style.opacity;
+    //faceel.style.opacity = 0.7 - faceel.style.opacity;
   } else if (e.key === "1") {
     scene += 1;
     changeMovie();
@@ -618,40 +634,46 @@ function keypress_ivent(e) {
     }
     changeMovie();
   } else if (e.key === "3") {
-    videoElem1.style.opacity = 1 - videoElem1.style.opacity;
+    //videoElem1.style.opacity = 1 - videoElem1.style.opacity;
   } else if (e.key === "4") {
-    videoElem1.style.opacity = 0;
-    videoElem2.play();
+    //videoElem1.style.opacity = 0;
+    //videoElem2.play();
   } else if (e.key === "q" || e.key === "Q") {
-    nowStatus = "CALIBRATION";
+    /*
+    nowStatus = "CALIBRATION"; //キャリブレーションモードに移行するが、キャリブレーションを始めるにはzを押す
     timeStart = new Date();
     imgElemWhite.style.opacity = 1;
     muteAllVideos();
+    */
   } else if (e.key === "z" || e.key === "Z") {
-    if (calib % 2 == 0) {
+    /*
+    if (calib % 2 == 0) { //zを一回目押すとキャリブレーションON
       noCalibration = false;
       imgElemWhite.src = "asset/WHITE3.png";
       calibration();
     } else {
-      noCalibration = true;
+      noCalibration = true; //zを二回目押すとキャリブレーションOFF
       imgElemWhite.src = "asset/WHITE2.png";
       closeCalibration();
     }
     calib += 1;
+  */
   } else if (e.key == "a" || e.key === "A") {
+    /*
     imgElemWhite.style.opacity = 0;
     //MOVIEの初期化
     nowStatus = "MOVIE";
     scene = 0;
     changeMovie();
+    */
   } else if (e.key == "x" || e.key === "X") {
     //clear();
   } else if (e.key == "n" || e.key == "N") {
-    webgazer.removeMouseEventListeners();
-    console.log("Press N");
+    //webgazer.removeMouseEventListeners();
+    //console.log("Press N");
   } else if (e.key == "l" || e.key == "L") {
-    webgazer.addMouseEventListeners();
-    console.log("Press L");
+    //webgazer.addMouseEventListeners();
+    //console.log("Press L");
   }
   return false;
 }
@@ -699,7 +721,7 @@ function calibrate(num) {
     }
   });
   if (count >= calibratePoints.length) {
-    alert("ok, finish calibration");
+    alert("キャリブレーションは完了しました\n 操作方法: \n G: 視線ポインター オン/オフ \n T: 視線の目標領域 オン/オフ");
     closeCalibration();
   }
 }
@@ -709,10 +731,21 @@ function calibration() {
   calibratePoints.forEach((p, i) => {
     calibratePoints[i] = 0;
   });
+  calib = 1;
 }
 function closeCalibration() {
   webgazer.removeMouseEventListeners(); //キャリブレーションが終わったら学習を閉じる
   document.querySelector("#calibrationbox").style.display = "none";
+  
+  //キャリブレーションが終わったらMOVIEに移行 web
+  //MOVIEの初期化
+  calib = 0;
+  nowStatus = "MOVIE";
+  noCalibration = false;
+  gazeel.style.opacity = 0;
+  imgElemWhite.style.opacity = 0;
+  scene = 0;
+  changeMovie();
 }
 function clear() {
   webgazer.clearData(); // データをクリアする
