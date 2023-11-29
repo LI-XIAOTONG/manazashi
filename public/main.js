@@ -206,7 +206,9 @@ webgazer
         for (let i = 0; i < 9; i++) {
           tvel[i].style.opacity = 0;
         }
+        //次のループのための準備
         loadAllVideos();
+        imgElemWhite.src = "asset/WHITE2.png";
         nowStatus = "END";
       }
     }
