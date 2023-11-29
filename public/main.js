@@ -30,6 +30,7 @@ var s3v4 = document.getElementById("s3v4"); //成功
 
 var videoElemStart = document.getElementById("start");
 var imgElemWhite = document.getElementById("white");
+var imgElemBlack = document.getElementById("black");
 var videoElemEnd = document.getElementById("end");
 
 const tvel = new Array(9);
@@ -154,6 +155,7 @@ webgazer
 
     // start
     if (nowStatus == "START" && data != null) {
+      imgElemBlack.style.opacity = 0;
       videoElemStart.play();
     }
 
@@ -204,6 +206,7 @@ webgazer
         for (let i = 0; i < 9; i++) {
           tvel[i].style.opacity = 0;
         }
+        loadAllVideos();
         nowStatus = "END";
       }
     }
@@ -409,10 +412,7 @@ function changeMovie() {
 
   } else if (scene % sceneNum == 2) {
     //ろうそく2
-    //videoElem1.style.opacity = 0;
-    //videoElem2.style.opacity = 0;
-    //videoElem3.muted = false;
-    //videoElem3.play();
+  
     
     s2v1.style.opacity = 0;
     s2v2.style.opacity = 0;
@@ -462,6 +462,7 @@ function changeMovie() {
     s3v3.play();
 
   } else if (scene % sceneNum == 6) {
+    imgElemBlack.style.opacity = 1; //black background
     //タイトル崩れる
     for (let i = 0; i < 9; i++) {
       tvel[i].style.opacity = 1;
@@ -621,6 +622,8 @@ s3v2.addEventListener("timeupdate", function () {
         //videoElem3.muted = false;
         //videoElem3.play();
 
+        console.log("play down video");
+
         s3v2.style.opacity = 0;
         s3v3.style.opacity = 1;
         s3v3.muted = false;
@@ -633,14 +636,13 @@ s3v2.addEventListener("timeupdate", function () {
         this.currentTime = 0.0;
         s3v2.style.opacity = 1;
         loopCount += 1;
+        s3v2.play();
         console.log(loopCount + "<=5");
-      } else if(loopCount >= 5) {
+      }
+      if(loopCount >= 5) {
         //ジェンガ崩れない
         console.log("not down "+loopCount);
-        //videoElem2.muted = true;
-        //videoElem3.muted = false;
-        //videoElem2.style.opacity = 0;
-        //videoElem3.play();
+
         
         s3v2.muted = true;
         s3v4.muted = false;
@@ -769,11 +771,13 @@ function keypress_ivent(e) {
     scene += 1;
     changeMovie();
   } else if (e.key === "2") {
+    /*
     scene -= 1;
     if (scene < 0) {
       scene += sceneNum;
     }
     changeMovie();
+    */
   } else if (e.key === "3") {
     //videoElem1.style.opacity = 1 - videoElem1.style.opacity;
   } else if (e.key === "4") {
