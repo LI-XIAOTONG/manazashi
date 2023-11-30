@@ -868,7 +868,7 @@ function calibrate(num) {
     }
   });
   if (count >= calibratePoints.length) {
-    alert("キャリブレーションは完了しました\n 操作方法: \n G: 視線ポインター オン/オフ \n T: 視線の目標領域 オン/オフ");
+    alert("キャリブレーションは完了しました\n 操作方法: \n G: 視線ポインタ オン/オフ \n T: 視線の目標領域 オン/オフ");
     closeCalibration();
   }
 }
